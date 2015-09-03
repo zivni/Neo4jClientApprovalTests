@@ -9,13 +9,13 @@ namespace Neo4jClientApprovalTests.Process
 {
     internal class Edge : IEquatable<Edge>
     {
-        [JsonProperty("source")]
+        [JsonProperty("from")]
         public long SourceVertex { get; set; }
 
-        [JsonProperty("target")]
+        [JsonProperty("to")]
         public long TargetVertex { get; set; }
 
-        [JsonProperty("caption")]
+        [JsonProperty("label")]
         public string Type { get; set; }
 
         public bool Equals(Edge other)

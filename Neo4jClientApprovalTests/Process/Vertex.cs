@@ -12,7 +12,7 @@ namespace Neo4jClientApprovalTests.Process
         [JsonProperty("id")]
         public long Id { get; set; }
 
-        [JsonProperty("caption")]
+        [JsonProperty("label")]
         public string Labels { get; set; }
 
         public string Data { get; set; }
