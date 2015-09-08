@@ -30,9 +30,11 @@ namespace Neo4jClientApprovalTests.Process
                 .Where(r => nodeIds.Contains(r.EdgeStartNodeId) && nodeIds.Contains(r.EdgeEndNodeId))
                 .Select(r => new Edge
                 {
+                    EdgeId = r.EdgeId,
                     SourceVertex = r.EdgeStartNodeId,
                     TargetVertex = r.EdgeEndNodeId,
                     Type = r.EdgeType,
+                    Data = r.EdgeDataJsonString
                 })
                 .Distinct()
                 .ToArray();

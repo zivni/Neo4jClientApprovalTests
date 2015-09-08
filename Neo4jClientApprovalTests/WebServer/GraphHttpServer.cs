@@ -11,30 +11,38 @@ namespace Neo4jClientApprovalTests.WebServer
 {
     internal class GraphHttpServer : HttpServer
     {
-        private readonly Graph graph;
+        private readonly Graph approvedGraph;
+        private readonly Graph recivedGraph;
 
-        public GraphHttpServer(Graph graph, int port) : base(port)
+        public GraphHttpServer(Graph approvedGraph, Graph recivedGraph, int port) : base(port)
         {
-            this.graph = graph;
+            this.approvedGraph = approvedGraph;
+            this.recivedGraph = recivedGraph;
         }
 
         public override void handleGETRequest(HttpProcessor p)
         {
+            result = false;
             string html;
             switch (p.http_url)
             {
+                case "/approve":
+                    result = true;
+                    p.writeSuccess();
+                    is_active = false;
+                    return;
+
                 case "/end":
                     p.writeSuccess();
                     is_active = false;
                     return;
 
-                case "/approved":
-                case "/received":
-                    html = HtmlCreator.Create(graph);
+                case "/favicon.ico":
+                    html = null;
                     break;
 
                 default:
-                    html = MainHtmlCreator.Create();
+                    html = MainHtmlCreator.Create(approvedGraph, recivedGraph);
                     break;
             }
 

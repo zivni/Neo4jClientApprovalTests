@@ -11,6 +11,7 @@ namespace Neo4jClientApprovalTests
         public string NodeDataJsonString { get; set; }
         public long NodeId { get; set; }
         public IEnumerable<string> Labels { get; set; }
+        public long EdgeId { get; set; }
         public string EdgeType { get; set; }
         public string EdgeDataJsonString { get; set; }
         public long EdgeStartNodeId { get; set; }

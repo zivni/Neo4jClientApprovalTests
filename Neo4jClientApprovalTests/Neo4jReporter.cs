@@ -28,18 +28,26 @@ namespace Neo4jClientApprovalTests
             var approvedRawData = LoadGraphRawDataFromJsonfile(approved);
             var receivedRawDate = LoadGraphRawDataFromJsonfile(received);
 
+            var approvedGraph = graphConverter.Convert(approvedRawData);
             var recivedGraph = graphConverter.Convert(receivedRawDate);
 
             int port = PortFinder.GetFreeIpPort();
-            var httpServer = new GraphHttpServer(recivedGraph, port);
-            Task t = Task.Run(() => httpServer.listen());
+            var httpServer = new GraphHttpServer(approvedGraph, recivedGraph, port);
+            Task<dynamic> t = Task<dynamic>.Run(() => httpServer.listen());
             string url = string.Format("http://localhost:{0}/test", port);
             System.Diagnostics.Process.Start(url);
             t.Wait();
+            if (t.Result == true)
+            {
+                File.Copy(received, approved, true);
+            }
         }
 
         private IEnumerable<GraphRawData> LoadGraphRawDataFromJsonfile(string filePath)
         {
+            if (!File.Exists(filePath))
+                return new GraphRawData[0];
+
             using (TextReader tr = new StreamReader(filePath))
             using (JsonReader jr = new JsonTextReader(tr))
             {

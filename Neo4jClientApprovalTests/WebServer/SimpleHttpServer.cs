@@ -208,6 +208,7 @@ namespace Neo4jClientApprovalTests.WebServer
     {
         protected int port;
         protected bool is_active = true;
+        protected dynamic result;
         private TcpListener listener;
 
         public HttpServer(int port)
@@ -215,7 +216,7 @@ namespace Neo4jClientApprovalTests.WebServer
             this.port = port;
         }
 
-        public void listen()
+        public dynamic listen()
         {
             listener = new TcpListener(IPAddress.Any, port);
             listener.Start();
@@ -227,6 +228,7 @@ namespace Neo4jClientApprovalTests.WebServer
                 thread.Start();
                 Thread.Sleep(1);
             }
+            return result;
         }
 
         public abstract void handleGETRequest(HttpProcessor p);
@@ -273,25 +275,6 @@ namespace Neo4jClientApprovalTests.WebServer
             p.outputStream.WriteLine("<html><body><h1>test server</h1>");
             p.outputStream.WriteLine("<a href=/test>return</a><p>");
             p.outputStream.WriteLine("postbody: <pre>{0}</pre>", data);
-        }
-    }
-
-    public class TestMain
-    {
-        public static int Main(String[] args)
-        {
-            HttpServer httpServer;
-            if (args.GetLength(0) > 0)
-            {
-                httpServer = new MyHttpServer(Convert.ToInt16(args[0]));
-            }
-            else
-            {
-                httpServer = new MyHttpServer(8080);
-            }
-            Thread thread = new Thread(new ThreadStart(httpServer.listen));
-            thread.Start();
-            return 0;
         }
     }
 }

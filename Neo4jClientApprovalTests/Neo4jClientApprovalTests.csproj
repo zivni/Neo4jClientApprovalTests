@@ -103,7 +103,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GraphRawData.cs" />
-    <Compile Include="Html\HtmlCreator.cs" />
     <Compile Include="Html\MainHtmlCreator.cs" />
     <Compile Include="Neo4jApprovals.cs" />
     <Compile Include="Neo4jReporter.cs" />
