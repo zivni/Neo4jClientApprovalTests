@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,40 @@ namespace Neo4jClientApprovalTests.Process
         [JsonProperty("id")]
         public long Id { get; set; }
 
-        [JsonProperty("label")]
+        public string firstLabel { get; set; }
+
         public string Labels { get; set; }
 
-        [JsonProperty("title")]
         public string Data { get; set; }
+
+        [JsonProperty("label")]
+        public string Text
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(Data))
+                {
+                    var jObj = JObject.Parse(Data);
+                    if (jObj.First is JProperty)
+                        return ((JProperty)jObj.First).Value.ToString();
+                }
+                if (!string.IsNullOrEmpty(firstLabel))
+                    return firstLabel;
+                return Id.ToString();
+            }
+        }
+
+        [JsonProperty("title")]
+        public string Popuptext
+        {
+            get
+            {
+                string seperator = "";
+                if (!string.IsNullOrEmpty(Labels) && !string.IsNullOrEmpty(Data))
+                    seperator = ": ";
+                return string.Format("{0}{1}{2}", Labels, seperator, Data);
+            }
+        }
 
         public bool Equals(Vertex other)
         {

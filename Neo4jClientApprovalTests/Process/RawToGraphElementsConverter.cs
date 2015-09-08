@@ -18,6 +18,7 @@ namespace Neo4jClientApprovalTests.Process
             var v = rawData.Select(r => new Vertex
             {
                 Id = r.NodeId,
+                firstLabel = r.Labels.FirstOrDefault(),
                 Labels = GetLabelString(r.Labels),
                 Data = r.NodeDataJsonString
             })

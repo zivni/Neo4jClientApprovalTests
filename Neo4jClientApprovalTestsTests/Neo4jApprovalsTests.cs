@@ -53,6 +53,17 @@ namespace Neo4jClientApprovalTests.Tests
         }
 
         [TestMethod]
+        public void VerifyGraphWithoutDataTest()
+        {
+            SetGeneratedApprovedFilePath();
+            graph.Cypher
+                .Create("(a)-[:NEXT]->(b), (b)-[:PREV]->(a), (a)-[:NEXT]->(b)")
+                .ExecuteWithoutResults();
+
+            Neo4jApprovals.VerifyGraph(graph);
+        }
+
+        [TestMethod]
         public void VerifySimpleIUpdatedGraphTest()
         {
             SetGeneratedApprovedFilePath();

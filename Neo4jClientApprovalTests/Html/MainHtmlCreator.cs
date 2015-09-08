@@ -38,10 +38,11 @@ namespace Neo4jClientApprovalTests.Html
             sb.AppendLine("<script>");
             sb.AppendLine("$(window).unload(function() {document.createElement('img').src='/end'; });");
             sb.AppendFormat("var data_recived = {0}\r\n", GetGraphJson(recived));
-            sb.AppendLine("var graph_recived = new vis.Network(document.getElementById('recived'), data_recived, {});");
+            sb.AppendLine("var op_recived={edges:{arrows: 'to'}};");
+            sb.AppendLine("var graph_recived = new vis.Network(document.getElementById('recived'), data_recived, op_recived);");
             sb.AppendFormat("var data_approved = {0}\r\n", GetGraphJson(approved));
-            sb.AppendLine("var op={layout:{randomSeed:graph_recived.getSeed()}, edges:{arrows: 'to'}};");
-            sb.AppendLine("var graph_approved = new vis.Network(document.getElementById('approved'), data_approved, op);");
+            sb.AppendLine("var op_approved={layout:{randomSeed:graph_recived.getSeed()}, edges:{arrows: 'to'}};");
+            sb.AppendLine("var graph_approved = new vis.Network(document.getElementById('approved'), data_approved, op_approved);");
             sb.AppendLine("graph_recived.setSize($('#recived').width(),$('#recived').height());");
             sb.AppendLine("graph_approved.setSize($('#approved').width(),$('#approved').height());");
             sb.AppendLine("$('#reject_button').click(function(){$.ajax('/end').done(function(){window.close();});});");
