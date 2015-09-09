@@ -8,18 +8,15 @@ using System.Threading.Tasks;
 
 namespace Neo4jClientApprovalTests.Process
 {
-    internal class Vertex : IEquatable<Vertex>
+    internal class Vertex : IEquatable<Vertex>, IVertex
     {
-        [JsonProperty("id")]
         public long Id { get; set; }
-
-        public string firstLabel { get; set; }
 
         public string Labels { get; set; }
 
         public string Data { get; set; }
+        public string firstLabel { get { return string.Join(", ", Labels); } }
 
-        [JsonProperty("label")]
         public string Text
         {
             get
@@ -36,7 +33,6 @@ namespace Neo4jClientApprovalTests.Process
             }
         }
 
-        [JsonProperty("title")]
         public string Popuptext
         {
             get

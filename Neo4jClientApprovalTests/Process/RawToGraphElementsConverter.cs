@@ -18,7 +18,6 @@ namespace Neo4jClientApprovalTests.Process
             var v = rawData.Select(r => new Vertex
             {
                 Id = r.NodeId,
-                firstLabel = r.Labels.FirstOrDefault(),
                 Labels = GetLabelString(r.Labels),
                 Data = r.NodeDataJsonString
             })
@@ -32,8 +31,8 @@ namespace Neo4jClientApprovalTests.Process
                 .Select(r => new Edge
                 {
                     EdgeId = r.EdgeId,
-                    SourceVertex = r.EdgeStartNodeId,
-                    TargetVertex = r.EdgeEndNodeId,
+                    FromId = r.EdgeStartNodeId,
+                    ToId = r.EdgeEndNodeId,
                     Type = r.EdgeType,
                     Data = r.EdgeDataJsonString
                 })

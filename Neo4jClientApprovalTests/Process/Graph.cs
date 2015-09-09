@@ -9,10 +9,21 @@ namespace Neo4jClientApprovalTests.Process
 {
     internal class Graph
     {
+        public Graph()
+        {
+        }
+
+        [JsonConstructor]
+        public Graph(IEnumerable<GraphNode> nodes, IEnumerable<GraphEdge> edges)
+        {
+            this.Vertices = nodes;
+            this.Edges = edges;
+        }
+
         [JsonProperty("nodes")]
-        public IEnumerable<Vertex> Vertices { get; set; }
+        public IEnumerable<IVertex> Vertices { get; set; }
 
         [JsonProperty("edges")]
-        public IEnumerable<Edge> Edges { get; set; }
+        public IEnumerable<IEdge> Edges { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ApprovalTests.Core;
 using Neo4jClientApprovalTests.Process;
+using Neo4jClientApprovalTests.Process.DataRead;
 using Neo4jClientApprovalTests.WebServer;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -15,44 +16,28 @@ namespace Neo4jClientApprovalTests
 {
     public class Neo4jReporter : IApprovalFailureReporter
     {
-        private static JsonSerializer myJsonSerializer;
-        private static RawToGraphElementsConverter graphConverter = new RawToGraphElementsConverter();
-
-        static Neo4jReporter()
-        {
-            myJsonSerializer = JsonSerializer.CreateDefault();
-        }
-
         public void Report(string approved, string received)
         {
-            var approvedRawData = LoadGraphRawDataFromJsonfile(approved);
-            var receivedRawDate = LoadGraphRawDataFromJsonfile(received);
+            var jsonReader = JsonGraphReaderBase.Select(received);
+            var recivedGraph = jsonReader.Read(received);
+            var approvedGraph = jsonReader.Read(approved);
 
-            var approvedGraph = graphConverter.Convert(approvedRawData);
-            var recivedGraph = graphConverter.Convert(receivedRawDate);
+            dynamic result = RunGraphHttpServer(recivedGraph, approvedGraph);
+            if (result == true)
+            {
+                File.Copy(received, approved, true);
+            }
+        }
 
+        private static dynamic RunGraphHttpServer(Graph recivedGraph, Graph approvedGraph)
+        {
             int port = PortFinder.GetFreeIpPort();
             var httpServer = new GraphHttpServer(approvedGraph, recivedGraph, port);
             Task<dynamic> t = Task<dynamic>.Run(() => httpServer.listen());
             string url = string.Format("http://localhost:{0}/test", port);
             System.Diagnostics.Process.Start(url);
             t.Wait();
-            if (t.Result == true)
-            {
-                File.Copy(received, approved, true);
-            }
-        }
-
-        private IEnumerable<GraphRawData> LoadGraphRawDataFromJsonfile(string filePath)
-        {
-            if (!File.Exists(filePath))
-                return new GraphRawData[0];
-
-            using (TextReader tr = new StreamReader(filePath))
-            using (JsonReader jr = new JsonTextReader(tr))
-            {
-                return myJsonSerializer.Deserialize<IEnumerable<GraphRawData>>(jr);
-            }
+            return t.Result;
         }
     }
 }

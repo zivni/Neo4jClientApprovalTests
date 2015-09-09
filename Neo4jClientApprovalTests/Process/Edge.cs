@@ -7,20 +7,16 @@ using System.Threading.Tasks;
 
 namespace Neo4jClientApprovalTests.Process
 {
-    internal class Edge : IEquatable<Edge>
+    internal class Edge : IEquatable<Edge>, IEdge
     {
         public long EdgeId { get; set; }
 
-        [JsonProperty("from")]
-        public long SourceVertex { get; set; }
+        public long FromId { get; set; }
 
-        [JsonProperty("to")]
-        public long TargetVertex { get; set; }
+        public long ToId { get; set; }
 
-        [JsonProperty("label")]
         public string Type { get; set; }
 
-        [JsonProperty("title")]
         public string Data { get; set; }
 
         public bool Equals(Edge other)
