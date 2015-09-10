@@ -14,7 +14,12 @@ Use `Neo4jApprover.VerifyQuery(IEnumerable<GraphNode> nodes, IEnumerable<GraphEd
 
 The reporter will be opened within your default browser. AS vis.js uses HTMl5 canvas - so you'll need a modern browser. I tested it with Chrome v45.
 
-Note: You should delete the graph before each test and use a temporery Neo4j database for testing. You can use [Ne04j Docker image](http://neo4j.com/developer/docker/) to run the temp DB
+Note 1: You should delete the graph before each test and use a temporery Neo4j database for testing. You can use [Neo4j Docker image](http://neo4j.com/developer/docker/) to run the temp DB
+
+Note 2: Whenever data is inserted to Neo4j it creates a new internal ID.
+Beacuse in unit tests we are always recreating the data the IDs will be diffrent each time.
+To over come this, the IDs are replaced with new ids starting from 1.
+Potantialy this beavior can create s false positive.
 
 NuGet Availabilty
 ---
