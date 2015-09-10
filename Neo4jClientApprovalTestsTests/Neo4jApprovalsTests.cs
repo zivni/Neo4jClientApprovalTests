@@ -78,7 +78,7 @@ namespace Neo4jClientApprovalTests.Tests
             _deleteData();
 
             graph.Cypher
-                .Create("(a:WRD {name:'Hello'})-[:NEXT {times: 5}]->(b:WORD {name:'world'}), (b)-[:PREV]->(a), (a)-[:NEXT]->(b)")
+                .Create("(a:WRD {name:'Goodbye'})-[:NEXT {times: 5}]->(b:WORD {name:'world'}), (b)-[:PREV]->(a), (a)-[:NEXT]->(b)")
                 .ExecuteWithoutResults();
 
             Neo4jApprover.VerifyGraph(graph);
