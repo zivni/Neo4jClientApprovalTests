@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Neo4jClientApprovalTests</id>
+    <version>$version$</version>
+    <title>Neo4jClient ApprovalTests</title>
+    <authors>Ziv Nitzan</authors>
+    <licenseUrl>https://raw.githubusercontent.com/zivni/Neo4jClientApprovalTests/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/zivni/Neo4jClientApprovalTests</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A ApprovalTests.Net reporter and approver to be used to unit test Neo4j with the Neo4jClient .net client</description>
+     <tags>neo4j neo4jclient Approvals ApprovalTests ApprovalTest Test Verification Verify Approve Testing</tags>
+  </metadata>
+</package>
