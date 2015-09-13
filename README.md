@@ -4,6 +4,12 @@ A [ApprovalTests.Net](https://github.com/approvals/ApprovalTests.Net) reporter a
 This project comes to solve the problem of visual approving Neo4j graphs during unit testing.
 It makes it very easy to visualize the current state of the graph and see diffrences between the approved graph and the changes made by new code. It can also be uses to visualize query results if the query returns nodes and edges (see the tests project included within this reposetory).
 
+NuGet Availabilty
+---
+[Install-Package Neo4jClientApprovalTests](https://www.nuget.org/packages/Neo4jClientApprovalTests/)
+
+**Please note:** The nuget package is installing an old version of ApprovalUtilities. I will try to fix it soon. As a workaround, after installing the Neo4jClientApprovalTests package, update the ApprovalUtilities package by running `Update-Package ApprovalUtilities`.
+
 Usage
 ---
 Just add `[UseReporter(typeof(Neo4jReporter)]` attribute on the test class or test method. See the [AprrovalTests documentation](http://blog.approvaltests.com/2011/12/using-reporters-in-approval-tests.html)
@@ -20,10 +26,6 @@ Note 2: Whenever data is inserted to Neo4j it creates a new internal ID.
 Beacuse in unit tests we are always recreating the data the IDs will be diffrent each time.
 To over come this, the IDs are replaced with new ids starting from 1.
 Potantialy this beavior can create s false positive.
-
-NuGet Availabilty
----
-Will come soon to [Install-Package Neo4jClientApprovalTests](https://www.nuget.org/packages/Neo4jClientApprovalTests/)
 
 Example
 ---
