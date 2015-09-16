@@ -9,6 +9,12 @@
     <projectUrl>https://github.com/zivni/Neo4jClientApprovalTests</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A ApprovalTests.Net reporter and approver to be used to unit test Neo4j with the Neo4jClient .net client</description>
-     <tags>neo4j neo4jclient Approvals ApprovalTests ApprovalTest Test Verification Verify Approve Testing</tags>
+    <tags>neo4j neo4jclient Approvals ApprovalTests ApprovalTest Test Verification Verify Approve Testing</tags>
+	<dependencies>
+      <dependency id="ApprovalTests" version="3.0.9" />
+	  <dependency id="ApprovalUtilities" version="3.0.9" />
+	  <dependency id="Neo4jClient" version="1.1.0.8" />
+	  <dependency id="Newtonsoft.Json" version="7.0.1" />
+    </dependencies>
   </metadata>
 </package>
