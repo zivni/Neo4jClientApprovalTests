@@ -85,6 +85,25 @@ namespace Neo4jClientApprovalTests.Tests
         }
 
         [TestMethod]
+        public void VerifySimpleGraphWithoutUpdateTest()
+        {
+            SetGeneratedApprovedFilePath();
+            graph.Cypher
+                .Create("(a:WORD {name:'Hello'})-[:NEXT {times: 5}]->(b:WORD {name:'world'}), (b)-[:PREV]->(a), (a)-[:NEXT]->(b)")
+                .ExecuteWithoutResults();
+
+            try { Neo4jApprover.VerifyGraph(graph); }
+            catch { }
+            _deleteData();
+
+            graph.Cypher
+                .Create("(a:WORD {name:'Hello'})-[:NEXT {times: 5}]->(b:WORD {name:'world'}), (b)-[:PREV]->(a), (a)-[:NEXT]->(b)")
+                .ExecuteWithoutResults();
+
+            Neo4jApprover.VerifyGraph(graph);
+        }
+
+        [TestMethod]
         public void VeryfiySimpleQuery()
         {
             SetGeneratedApprovedFilePath();

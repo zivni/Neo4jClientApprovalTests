@@ -57,6 +57,7 @@ namespace Neo4jClientApprovalTests
             //then when comparing to the old version there should be the same ids
 
             SortedSet<long> nodes = new SortedSet<long>(graphData.Select(g => g.NodeId));
+            Dictionary<long, long> edgeIds = new Dictionary<long, long>();
             long i = 0;
             foreach (long nodeId in nodes)
             {
@@ -70,6 +71,16 @@ namespace Neo4jClientApprovalTests
                     if (rawData.EdgeEndNodeId == nodeId)
                         rawData.EdgeEndNodeId = i;
                 }
+            }
+
+            i = 0;
+            foreach (var rawData in graphData)
+            {
+                if (!edgeIds.ContainsKey(rawData.EdgeId))
+                {
+                    edgeIds.Add(rawData.EdgeId, ++i);
+                }
+                rawData.EdgeId = edgeIds[rawData.EdgeId];
             }
         }
 
