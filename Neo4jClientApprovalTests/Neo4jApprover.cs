@@ -99,7 +99,10 @@ namespace Neo4jClientApprovalTests
                    EdgeStartNodeId = Return.As<long>("ID(STARTNODE(r))"),
                    EdgeEndNodeId = Return.As<long>("ID(ENDNODE(r))")
                });
-            return q.Results.ToArray();
+            return q.Results
+                .OrderBy(r => r.NodeId)
+                .ThenBy(r => r.EdgeId)
+                .ToArray();
         }
     }
 }
