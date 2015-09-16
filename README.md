@@ -61,7 +61,6 @@ ScreenShots
 Dependancies
 ---
 * The great [vis.js](http://visjs.org/) to draw the graph.
-* [ObjectApproval](https://github.com/SimonCropp/ObjectApproval) to make my life easier with the approval method.
 * And cannot live without [Json.net](http://www.newtonsoft.com/json)
 
 License

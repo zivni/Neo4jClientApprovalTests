@@ -2,12 +2,10 @@
 using Neo4jClient;
 using Neo4jClient.Cypher;
 using Neo4jClientApprovalTests.Process;
-using ObjectApproval;
-using System;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Neo4jClientApprovalTests
 {
@@ -17,7 +15,8 @@ namespace Neo4jClientApprovalTests
         {
             GraphRawData[] graphData = GetFraphData(graph);
             NormalizeGraphData(graphData);
-            ObjectApprover.VerifyWithJson(graphData);
+            string serlizedString = JsonConvert.SerializeObject(graphData, Formatting.Indented, new JsonConverter[] { new StringEnumConverter() });
+            Approvals.Verify(serlizedString);
         }
 
         public static void VerifyQuery(IEnumerable<GraphNode> nodes, IEnumerable<GraphEdge> edges, bool leaveNodeIdsUnchanged = false)
@@ -25,7 +24,8 @@ namespace Neo4jClientApprovalTests
             Graph graph = new Graph { Edges = edges, Vertices = nodes };
             if (!leaveNodeIdsUnchanged)
                 NormlizeQueryData(graph);
-            ObjectApprover.VerifyWithJson(graph);
+            string serlizedString = JsonConvert.SerializeObject(graph, Formatting.Indented, new JsonConverter[] { new StringEnumConverter() });
+            Approvals.Verify(serlizedString);
         }
 
         private static void NormlizeQueryData(Graph graph)
